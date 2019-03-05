@@ -16,7 +16,7 @@ public class Car {
 	
 	@Override
 	public String toString() {
-		return "Car [make=" + make + ", model=" + model + ", year=" + year + "]";
+		return "\nMake: " + make + "\nModel: " + model + "\nYear: " + year;
 	}
 
 	public String getMake() {

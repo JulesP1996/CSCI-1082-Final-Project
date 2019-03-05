@@ -35,7 +35,7 @@ public class Sedan extends Car{
 	
 	@Override
 	public String toString() {
-		return "Sedan [" + super.toString() + "engine=" + engine + ", drivetype=" + drivetype + ", transmission=" + transmission + "]";
+		return super.toString() + "\nEngine: " + engine + "\nDrivetype: " + drivetype + "\nTransmission: " + transmission;
 	}
 	
 	
