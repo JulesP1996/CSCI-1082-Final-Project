@@ -1,4 +1,4 @@
-package lunar_lander;
+package Lunar_Lander;
 
 import java.awt.Graphics2D;
 

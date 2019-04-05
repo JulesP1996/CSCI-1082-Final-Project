@@ -1,4 +1,4 @@
-package lunar_lander;
+package lunarLander;
 
 import java.net.URL;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package lunar_lander;
+package lunarLander;
 
 public class Rocket {
 

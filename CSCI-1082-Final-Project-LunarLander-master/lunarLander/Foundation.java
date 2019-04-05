@@ -1,4 +1,4 @@
-package lunar_lander;
+package lunarLander;
 
 import java.awt.Canvas;
 import java.awt.Dimension;

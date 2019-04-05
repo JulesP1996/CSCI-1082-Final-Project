@@ -1,4 +1,4 @@
-package lunar_lander;
+package Lunar_Lander;
 
 public interface Updatable {
 	
