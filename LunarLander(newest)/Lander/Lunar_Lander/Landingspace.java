@@ -7,9 +7,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
-public class Landingspace implements Renderable {
+public class Landingspace implements Renderable, Updatable {
   
   private Random random; // Random start position on X coordinate
 
@@ -25,6 +26,7 @@ public class Landingspace implements Renderable {
 	public Landingspace() {
 		initialize();
 		loadcontent();
+		
 
 		x = random.nextInt(Foundation.WIDTH - landingWidth); // X random start
 	}
@@ -35,8 +37,8 @@ public class Landingspace implements Renderable {
 
  	public void loadcontent() {
  		try {
- 			URL landingSpaceUrl = this.getClass().getResource("/lunar_lander/resources/img/landing_area.png");
- 			landingSpace = ImageIO.read(landingSpaceUrl);
+ 			File sourceimage = new File("H:/Java/LunarLander(newest)/Resources/platform.png");
+ 			landingSpace = ImageIO. read(sourceimage);
  			landingWidth = landingSpace.getWidth();
 		} catch (IOException ex) {
  			Logger.getLogger(Landingspace.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,18 +47,25 @@ public class Landingspace implements Renderable {
 
  	public void draw(Graphics2D g2d) {
  		g2d.drawImage(landingSpace, x, y, null); 	
- 		}
+ 	}
+ 	
 	@Override
 	public void render(Graphics2D g, float interpolation) {
-		g.fillRect((int) (x + interpolation), 0, landingWidth, (int) y);
+		g.fillRect((int) (landingWidth + interpolation), 0, landingWidth, (int) y);
        
+	}
+	@Override
+	public void update(Input input) {
+		// TODO Auto-generated method stub
 		
-	}}
+	}
+	
 //	@Override
 //	public void update(Input input) {
-//		
-//		
+//		 for(Updatable u : updatables) {
+//	            u.update(input);
+//	        }
 //	}
-//
-//	}
-//  
+
+}
+  

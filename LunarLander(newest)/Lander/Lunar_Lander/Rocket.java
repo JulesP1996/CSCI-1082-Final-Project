@@ -2,16 +2,19 @@ package Lunar_Lander;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Control;
 
 
-public class Rocket {
+public class Rocket implements KeyListener, Updatable, Renderable{
 
 	private Random random; // Random X start position
 	public int xPos; // X coordinate (2D)
@@ -38,7 +41,7 @@ public class Rocket {
 		initialize();
 		loadcontent();
 
-		xPos = random.nextInt(Framework.frameWidth - landerRocketWidth); // X random start
+		xPos = random.nextInt(Foundation.WIDTH - landerRocketWidth); // X random start
 	}
 
 	private void initialize() {
@@ -54,28 +57,28 @@ public class Rocket {
 	private void loadcontent() // Load resources
 	{
 		try {
-			URL landerRocketURL = this.getClass().getResource("/lunar_lander/resources/img/landerRocket.png");
-			landerRocket = ImageIO.read(landerRocketURL);
+			File landerRocketImg = new File("/Lunar_Lander/Resources/img/landerRocket.png");
+			landerRocket = ImageIO.read(landerRocketImg);
 			landerRocketWidth = landerRocket.getWidth();
 			landerRocketHeight = landerRocket.getHeight();
 
-			URL landerLandedURL = this.getClass().getResource("/lunar_lander/resources/img/lander_landed.png");
-			landerLanded = ImageIO.read(landerLandedURL);
+			File landerLandedImg = new File("/Lunar_Lander/Resources/img/lander_landed.png");
+			landerLanded = ImageIO.read(landerLandedImg);
 
-			URL landerCrashedURL = this.getClass().getResource("/lunar_lander/resources/img/lander_crash.png");
-			landerCrashed = ImageIO.read(landerCrashedURL);
+			File landerCrashedImg = new File("/Lunar_Lander/Resources/img/lander_crash.png");
+			landerCrashed = ImageIO.read(landerCrashedImg);
 
-			URL landerFlyingUpURL = this.getClass().getResource("/lunar_lander/resources/img/lander_fire_up.png");
-			landerFlyingUp = ImageIO.read(landerFlyingUpURL);
+			File landerFlyingUpImg = new File("/Lunar_Lander/Resources/img/lander_fire_up.png");
+			landerFlyingUp = ImageIO.read(landerFlyingUpImg);
 			
-			URL landerFlyingDownURL = this.getClass().getResource("/lunar_lander/resources/img/lander_fire_down.png");
-			landerFlyingDown = ImageIO.read(landerFlyingDownURL);
+			File landerFlyingDownImg = new File("/Lunar_Lander/Resources/img/lander_fire_down.png");
+			landerFlyingDown = ImageIO.read(landerFlyingDownImg);
 			
-			URL landerFlyingRightURL = this.getClass().getResource("/lunar_lander/resources/img/lander_fire_right.png");
-			landerFlyingRight = ImageIO.read(landerFlyingRightURL);
+			File landerFlyingRightImg = new File("/Lunar_Lander/Resources/img/lander_fire_right.png");
+			landerFlyingRight = ImageIO.read(landerFlyingRightImg);
 			
-			URL landerFlyingLeftURL = this.getClass().getResource("/lunar_lander/resources/img/lander_fire_left.png");
-			landerFlyingLeft = ImageIO.read(landerFlyingLeftURL);
+			File landerFlyingLeftImg = new File("/Lunar_Lander/Resources/img/lander_fire_left.png");
+			landerFlyingLeft = ImageIO.read(landerFlyingLeftImg);
 			
 		} catch (IOException ex) {
 			Logger.getLogger(Rocket.class.getName())
@@ -83,60 +86,109 @@ public class Rocket {
 		}
 	}
 
-	public void Update() // Inverted rocket controls
-	{
-		if (Control.keyboardKeyState(KeyEvent.VK_DOWN)) // Key DOWN
+	@Override
+	public void keyTyped(KeyEvent e) {}
+
+	public void keyDown(KeyEvent ke, Graphics2D g2d) {
+		if (ke.getKeyCode() == KeyEvent.VK_DOWN) // Key DOWN
 			speedY -= speedAccelerating;
 
 		else {
 			speedY -= speedGrav;
 		}
 
-		if (Control.keyboardKeyState(KeyEvent.VK_UP)){ // Key UP
+		if (ke.getKeyCode() == KeyEvent.VK_UP){ // Key UP
 			speedY += speedAccelerating;
 		}
-		if (Control.keyboardKeyState(KeyEvent.VK_RIGHT)){ // Key RIGHT
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT){ // Key RIGHT
 			speedX -= speedAccelerating;
 		}
-		if (Control.keyboardKeyState(KeyEvent.VK_LEFT)){ // Key LEFT
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT){ // Key LEFT
 			speedX += speedAccelerating;
 	        }
-		if (Control.keyboardKeyState(KeyEvent.VK_0)){ // Cheat
+		if (ke.getKeyCode() == KeyEvent.VK_0){ // Cheat
 			speedY = 0;
 			speedX = 0;
 		}
 		xPos += speedX;
 		yPos += speedY;
+		
+			if (landed) // Check if landed
+			{
+				g2d.drawImage(landerLanded, xPos, yPos, null);
+			} else if (crashed) // Check if crashed
+			{
+				g2d.drawImage(landerCrashed, xPos, yPos, null);
+			} else {
+				if (ke.getKeyCode() == KeyEvent.VK_UP) // Draw fly image
+				g2d.drawImage(landerFlyingDown, xPos, yPos, null);
+				g2d.drawImage(landerRocket, xPos, yPos, null);
 
-	}
+				if (ke.getKeyCode() == KeyEvent.VK_DOWN) // Draw fly image
+				g2d.drawImage(landerFlyingUp, xPos, yPos, null);
+				g2d.drawImage(landerRocket, xPos, yPos, null);
+
+				if (ke.getKeyCode() == KeyEvent.VK_RIGHT) // Draw fly image
+				g2d.drawImage(landerFlyingLeft, xPos, yPos, null);
+				g2d.drawImage(landerRocket, xPos, yPos, null);
+
+				if (ke.getKeyCode() == KeyEvent.VK_LEFT) // Draw fly image
+				g2d.drawImage(landerFlyingRight, xPos, yPos, null);
+				g2d.drawImage(landerRocket, xPos, yPos, null);
+			}
 	
+	}
+		
 
-	public void draw(Graphics2D g2d) {
+	public void keyUp(KeyEvent ke, Graphics2D g2d) {
+		if (ke.getKeyCode() == KeyEvent.VK_DOWN) // Key DOWN
+			speedY += speedAccelerating;
 
-		if (landed) // Check if landed
-		{
-			g2d.drawImage(landerLanded, xPos, yPos, null);
-		} else if (crashed) // Check if crashed
-		{
-			g2d.drawImage(landerCrashed, xPos, yPos, null);
-		} else {
-			if (Control.keysboardKeyState(KeyEvent.VK_UP)) // Draw fly image
-			g2d.drawImage(landerFlyingDown, xPos, yPos, null);
-			g2d.drawImage(landerRocket, xPos, yPos, null);
-
-			if (Control.keyboardKeyState(KeyEvent.VK_DOWN)) // Draw fly image
-			g2d.drawImage(landerFlyingUp, xPos, yPos, null);
-			g2d.drawImage(landerRocket, xPos, yPos, null);
-
-			if (Control.keyboardKeyState(KeyEvent.VK_RIGHT)) // Draw fly image
-			g2d.drawImage(landerFlyingLeft, xPos, yPos, null);
-			g2d.drawImage(landerRocket, xPos, yPos, null);
-
-			if (Control.keyboardKeyState(KeyEvent.VK_LEFT)) // Draw fly image
-			g2d.drawImage(landerFlyingRight, xPos, yPos, null);
-			g2d.drawImage(landerRocket, xPos, yPos, null);
+		else {
+			speedY += speedGrav;
 		}
+
+		if (ke.getKeyCode() == KeyEvent.VK_UP){ // Key UP
+			speedY -= speedAccelerating;
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_RIGHT){ // Key RIGHT
+			speedX += speedAccelerating;
+		}
+		if (ke.getKeyCode() == KeyEvent.VK_LEFT){ // Key LEFT
+			speedX -= speedAccelerating;
+	        }
+		if (ke.getKeyCode() == KeyEvent.VK_0){ // Cheat
+			speedY = 0;
+			speedX = 0;
+		}
+		xPos += speedX;
+		yPos += speedY;
+	}
+
+
+	
+	@Override
+	public void update(Input input) {
+//		 for(Updatable u : updatables) {
+//	            u.update(input);
+//	        }
+	}
+  
+	@Override
+	public void render(Graphics2D g, float interpolation) {
+//		g.fillRect((int) (landerRocketWidth + interpolation), 0, landerRocketWidth, (int) landerRocketHeight);
+		g.drawImage(speedY <= 0 ? landerFlyingDown : landerFlyingUp, (int) landerRocketWidth, (int) (landerRocketHeight + (speedY * interpolation)), null);
+		
 	}
 	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void keyReleased(KeyEvent e) {}
+
+	
 }

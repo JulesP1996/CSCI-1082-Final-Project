@@ -5,12 +5,16 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class Foundation {
     
     private Canvas game = new Canvas();
-    public final static int WIDTH = 1920, HEIGHT = 1080;
+    public final static int WIDTH = 1366, HEIGHT = 768;
     
     private String gameName = "Lunar Lander";
     
@@ -38,6 +42,9 @@ public class Foundation {
     public void start() {
         Dimension gameSize = new Dimension(WIDTH, HEIGHT);
         JFrame gameWindow = new JFrame(gameName);
+        JLabel background = new JLabel();
+        background.setIcon(new ImageIcon("H:/Java/LunarLander(newest)/Resources/background.jpg"));
+        gameWindow.add(background);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameWindow.setSize(gameSize);
         gameWindow.setResizable(false);

@@ -1,12 +1,14 @@
 package Lunar_Lander;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class Fuel {
+public class Fuel implements Updatable, Renderable{
 
 	private int xPos;
 	private int yPos;
@@ -30,13 +32,26 @@ public class Fuel {
 			fuelAmount -= fuelLoss;
 		}
 		if(fuelAmount == 0) {
-			URL landerCrashedURL = this.getClass().getResource("/lunar_lander/resources/img/lander_crash.png");
+			File landerCrashedImg = new File("/Lunar_Lander/Resources/img/lander_crash.png");
 			try {
-				landerCrashed = ImageIO.read(landerCrashedURL);
+				landerCrashed = ImageIO.read(landerCrashedImg);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void render(Graphics2D g, float interpolation) {
+		
+		
+	}
+
+	@Override
+	public void update(Input input) {
+//		 for(Updatable u : updatables) {
+//	            u.update(input);
+//	        }
 	}
 }
