@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Landingspace implements Renderable, Updatable {
+public class Landingspace extends Foundation implements Renderable, Updatable {
   
   private Random random; // Random start position on X coordinate
 
@@ -27,12 +27,13 @@ public class Landingspace implements Renderable, Updatable {
 		initialize();
 		loadcontent();
 		
-
 		x = random.nextInt(Foundation.WIDTH - landingWidth); // X random start
+		System.out.println(x);
 	}
  	public void initialize() {
  		random = new Random();
- 		y = (int) (Foundation.HEIGHT * 0.95); // 95% of frame height
+ 		y = (int) (Foundation.HEIGHT * 0.91); // 91% of frame height
+ 		System.out.println(y);
  	}
 
  	public void loadcontent() {

@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.Control;
 
 
-public class Rocket implements KeyListener, Updatable, Renderable{
+public class Rocket extends Foundation implements KeyListener, Updatable, Renderable{
 
 	private Random random; // Random X start position
 	public int xPos; // X coordinate (2D)
@@ -36,14 +36,85 @@ public class Rocket implements KeyListener, Updatable, Renderable{
 	public int landerRocketWidth; // Read image width
 	public int landerRocketHeight; // Read image height
 
-	public Rocket() // Gather rocket dimensions
-	{
+	
+	
+	public int getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public int getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
+	public boolean isLanded() {
+		return landed;
+	}
+
+	public void setLanded(boolean landed) {
+		this.landed = landed;
+	}
+
+	public boolean isCrashed() {
+		return crashed;
+	}
+
+	public void setCrashed(boolean crashed) {
+		this.crashed = crashed;
+	}
+
+	public int getMaxLandingSpeed() {
+		return maxLandingSpeed;
+	}
+
+	public void setMaxLandingSpeed(int maxLandingSpeed) {
+		this.maxLandingSpeed = maxLandingSpeed;
+	}
+
+	public static double getSpeedX() {
+		return speedX;
+	}
+
+	public void setSpeedX(double speedX) {
+		Rocket.speedX = speedX;
+	}
+
+	public double getSpeedY() {
+		return speedY;
+	}
+
+	public void setSpeedY(double speedY) {
+		this.speedY = speedY;
+	}
+
+	public double getSpeedGrav() {
+		return speedGrav;
+	}
+
+	public void setSpeedGrav(double speedGrav) {
+		this.speedGrav = speedGrav;
+	}
+
+	public Rocket(boolean crashed, int speedAccelerating, int landerRocketWidth, int landerRocketHeight) {
+		super();
+		this.crashed = crashed;
+		this.speedAccelerating = speedAccelerating;
+		this.landerRocketWidth = landerRocketWidth;
+		this.landerRocketHeight = landerRocketHeight;
 		initialize();
 		loadcontent();
 
 		xPos = random.nextInt(Foundation.WIDTH - landerRocketWidth); // X random start
+		yPos = 0;
 	}
-
+	
 	private void initialize() {
 	random = new Random(); // Initialize random start
 
@@ -51,6 +122,8 @@ public class Rocket implements KeyListener, Updatable, Renderable{
 		speedY = 1;
 		speedGrav = -0.16;
 		maxLandingSpeed = 5;
+	
+		
 	}
 
 

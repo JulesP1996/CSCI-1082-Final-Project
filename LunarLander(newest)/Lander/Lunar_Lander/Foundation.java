@@ -1,6 +1,7 @@
 package Lunar_Lander;
 
 import java.awt.Canvas;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -15,6 +16,7 @@ public class Foundation {
     
     private Canvas game = new Canvas();
     public final static int WIDTH = 1366, HEIGHT = 768;
+    
     
     private String gameName = "Lunar Lander";
     
@@ -43,8 +45,11 @@ public class Foundation {
         Dimension gameSize = new Dimension(WIDTH, HEIGHT);
         JFrame gameWindow = new JFrame(gameName);
         JLabel background = new JLabel();
+        //JPanel landingPad = new JPanel();
+        //landingPad.add();
         background.setIcon(new ImageIcon("H:/Java/LunarLander(newest)/Resources/background.jpg"));
         gameWindow.add(background);
+        //gameWindow.add(landingPad);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameWindow.setSize(gameSize);
         gameWindow.setResizable(false);
@@ -55,7 +60,6 @@ public class Foundation {
         game.setPreferredSize(gameSize);
         gameWindow.add(game);
         gameWindow.setLocationRelativeTo(null);
-        
         
         input = new Input();
         game.addKeyListener(input);

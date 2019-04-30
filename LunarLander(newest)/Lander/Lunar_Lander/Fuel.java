@@ -8,30 +8,26 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class Fuel implements Updatable, Renderable{
+public class Fuel extends Foundation implements Updatable, Renderable{
 
 	private int xPos;
 	private int yPos;
-	private static int fuelAmount = 100;
-	private int fuelLoss = 5;
+	private static double fuelAmount = 100;
+	private double fuelLoss = 0.5;
 	private BufferedImage landerCrashed; // Crashed Lander
 	private BufferedImage fuelBar;
-
-
-	public Fuel() {
-		initialize();
-		
-	}
-
-	private void initialize() {
-		fuelUsed();
-	}
+	
+//	private void initialize() {
+//		fuelUsed();
+//	}
 
 	public void fuelUsed(){
 		while (Rocket.speedX > 0 && fuelAmount > 0) {
+			fuelLoss = Rocket.speedX/10;
 			fuelAmount -= fuelLoss;
+			System.out.println(fuelAmount);
 		}
-		if(fuelAmount == 0) {
+		if(fuelAmount <= 0) {
 			File landerCrashedImg = new File("/Lunar_Lander/Resources/img/lander_crash.png");
 			try {
 				landerCrashed = ImageIO.read(landerCrashedImg);
