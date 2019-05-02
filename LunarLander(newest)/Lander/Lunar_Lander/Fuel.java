@@ -8,46 +8,42 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class Fuel extends Foundation implements Updatable, Renderable{
+public class Fuel {
 
 	private int xPos;
 	private int yPos;
 	private static double fuelAmount = 100;
 	private double fuelLoss = 0.5;
+	private Rocket r = new Rocket();
 	private BufferedImage landerCrashed; // Crashed Lander
 	private BufferedImage fuelBar;
-	
-//	private void initialize() {
-//		fuelUsed();
-//	}
 
 	public void fuelUsed(){
-		while (Rocket.speedX > 0 && fuelAmount > 0) {
-			fuelLoss = Rocket.speedX/10;
+		while (Rocket.speedX != 0 && Rocket.speedY != 0 && fuelAmount > 0) {
+			fuelLoss = Math.abs(Rocket.speedX)/10;
 			fuelAmount -= fuelLoss;
-			System.out.println(fuelAmount);
-		}
-		if(fuelAmount <= 0) {
-			File landerCrashedImg = new File("/Lunar_Lander/Resources/img/lander_crash.png");
+			
 			try {
-				landerCrashed = ImageIO.read(landerCrashedImg);
-			} catch (IOException e) {
+				Thread.sleep(1000);
+				if(r.isCrashed()) {
+				break;
+			}
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			System.out.println(fuelAmount);
 		}
-	}
-
-	@Override
-	public void render(Graphics2D g, float interpolation) {
-		
-		
-	}
-
-	@Override
-	public void update(Input input) {
-//		 for(Updatable u : updatables) {
-//	            u.update(input);
-//	        }
+		if(fuelAmount <= 0) {
+			System.out.println("Crashed");
+//			File landerCrashedImg = new File("/LunarLander(newest)/Resources/explosion1.png");
+//			try {
+//				landerCrashed = ImageIO.read(landerCrashedImg);
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		}
 	}
 }

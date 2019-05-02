@@ -10,63 +10,36 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Landingspace extends Foundation implements Renderable, Updatable {
+public class Landingspace {
   
-  private Random random; // Random start position on X coordinate
-
+    private Random random; // Random start position on X coordinate
+    private Foundation f = new Foundation();
 	public int x; // horizontal
-
 	public int y; // vertical
-
 	private BufferedImage landingSpace;
-
 	public int landingWidth;
 	public int landingHeight;
 
 	public Landingspace() {
-		initialize();
-		loadcontent();
-		
-		x = random.nextInt(Foundation.WIDTH - landingWidth); // X random start
-		System.out.println(x);
+
 	}
+	
  	public void initialize() {
  		random = new Random();
  		y = (int) (Foundation.HEIGHT * 0.91); // 91% of frame height
- 		System.out.println(y);
+ 		System.out.println("LandingPad: " + y);
+ 		x = random.nextInt(Foundation.WIDTH - landingWidth); // X random start
+		System.out.println("LandingPad: " + x);
  	}
 
  	public void loadcontent() {
- 		try {
- 			File sourceimage = new File("H:/Java/LunarLander(newest)/Resources/platform.png");
- 			landingSpace = ImageIO. read(sourceimage);
- 			landingWidth = landingSpace.getWidth();
-		} catch (IOException ex) {
- 			Logger.getLogger(Landingspace.class.getName()).log(Level.SEVERE, null, ex);
- 		}
+// 		try {
+// 			File sourceimage = new File("H:/Java/LunarLander(newest)/Resources/platform.png");
+// 			landingSpace = ImageIO. read(sourceimage);
+// 			landingWidth = landingSpace.getWidth();
+//		} catch (IOException ex) {
+// 			Logger.getLogger(Landingspace.class.getName()).log(Level.SEVERE, null, ex);
+// 		}
 	}
-
- 	public void draw(Graphics2D g2d) {
- 		g2d.drawImage(landingSpace, x, y, null); 	
- 	}
- 	
-	@Override
-	public void render(Graphics2D g, float interpolation) {
-		g.fillRect((int) (landingWidth + interpolation), 0, landingWidth, (int) y);
-       
-	}
-	@Override
-	public void update(Input input) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-//	@Override
-//	public void update(Input input) {
-//		 for(Updatable u : updatables) {
-//	            u.update(input);
-//	        }
-//	}
-
 }
   

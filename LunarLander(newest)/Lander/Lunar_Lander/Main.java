@@ -1,20 +1,11 @@
 package Lunar_Lander;
 
-public class Main extends Foundation{
+public class Main {
 	
 	public static void main(String[] args) {
-		//Foundation g = new Foundation();
-		
-	    Landingspace l = new Landingspace();
-	    l.loadcontent();
-		
-		Rocket r = new Rocket(false, 1, 25, 30);
-	    r.setSpeedX(6);
-		
-//		Fuel f = new Fuel();
-//	    f.fuelUsed();
+		Foundation g = new Foundation();
 
-		//g.start();
+	    g.start();
 	
 	}
 	
