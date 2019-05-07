@@ -17,18 +17,18 @@ public class Landingspace {
 	public int x; // horizontal
 	public int y; // vertical
 	private BufferedImage landingSpace;
-	public int landingWidth;
-	public int landingHeight;
+	public int landingWidth = 373;
+	public int landingHeight= 69;
 
 	public Landingspace() {
 
 	}
 	
  	public void initialize() {
- 		random = new Random();
+ 		//random = new Random();
  		y = (int) (Foundation.HEIGHT * 0.91); // 91% of frame height
  		System.out.println("LandingPad: " + y);
- 		x = random.nextInt(Foundation.WIDTH - landingWidth); // X random start
+ 		x = 500;//random.nextInt(Foundation.WIDTH - landingWidth); // X random start
 		System.out.println("LandingPad: " + x);
  	}
 

@@ -24,11 +24,8 @@ public class Foundation {
         Dimension gameSize = new Dimension(WIDTH, HEIGHT);
         JFrame gameWindow = new JFrame(gameName);
         JLabel background = new JLabel();
-        //JPanel landingPad = new JPanel();
-        //landingPad = l.loadcontent();
         background.setIcon(new ImageIcon("H:/Java/LunarLander(newest)/Resources/background.jpg"));
         gameWindow.add(background);
-        //gameWindow.add(landingPad);
         gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameWindow.setSize(gameSize);
         gameWindow.setResizable(false);
@@ -63,16 +60,21 @@ public class Foundation {
          
         while(running) {
             loops = 0;
-           
+            
+            if(r.isCrashed() == false) {
+            	//f.fuelUsed();   
             while(System.currentTimeMillis() > nextGameTick && loops < MAX_FRAMESKIP) {
                 ticks++;
-                if(r.isCrashed() || r.isLanded()) {
-                	running = false;
-                	break;
-                }
-                f.fuelUsed();
                 nextGameTick += SKIP_TICKS;
                 loops++;
+            }
+            }
+            if(r.isCrashed() == true) {
+            	System.out.println("Crashed");
+            	break;
+            } else if(r.isLanded() == true) {
+            	System.out.println("Landed");
+            	break;
             }
             
             if(System.currentTimeMillis() - timeAtLastFPSCheck >= 1000) {

@@ -47,7 +47,7 @@ public class Rocket implements KeyListener{
 		loadcontent();
 
 
-		xPos = random.nextInt(Foundation.WIDTH - landerRocketWidth); // X random start
+		xPos =500; //random.nextInt(Foundation.WIDTH - landerRocketWidth); // X random start
 		System.out.println("Rocket: " + xPos + " " + yPos);
 		yPos = 0;
 	}
@@ -62,7 +62,8 @@ public class Rocket implements KeyListener{
 		random = new Random(); // Initialize random start
 
 		speedAccelerating = 2;
-		speedY = 1;
+		speedY = 0;
+		speedX = 0;
 		speedGrav = -0.16;
 		maxLandingSpeed = 5;
 
@@ -100,9 +101,12 @@ public class Rocket implements KeyListener{
 	}
 	
 	public boolean isLanded() {
-		if(xPos+30 == l.x + l.landingWidth && yPos+50 == l.landingHeight) {
-			System.out.println("Landed");
+		if(xPos == 500 && yPos >= 698 && speedY <= maxLandingSpeed) {
 			return true;
+		}
+		if(xPos == 500 && yPos >= 698 && speedY >= maxLandingSpeed) {
+			System.out.println("Crashed");
+			return false;
 		}
 		return false;
 	}
@@ -112,10 +116,10 @@ public class Rocket implements KeyListener{
 	}
 
 	public boolean isCrashed() {
-		if(xPos > 1366 || xPos < 0 || yPos > 698 || yPos < 0) {
-			System.out.println("Crashed");
+		if(xPos > f.WIDTH || xPos < 0 || yPos > f.HEIGHT || yPos < 0) {
 			return true;
 		}
+		
 		return false;
 	}
 
@@ -165,6 +169,10 @@ public class Rocket implements KeyListener{
 		if (ke.getKeyCode() == KeyEvent.VK_0) { // Cheat
 			speedY = 0;
 			speedX = 0;
+			System.out.println("speedX: "+speedX);
+			System.out.println(xPos);
+			System.out.println("speedY: "+speedY);
+			System.out.println(yPos);
 		}
 		xPos += speedX;
 		yPos += speedY;
