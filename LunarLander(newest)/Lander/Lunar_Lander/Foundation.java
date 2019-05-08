@@ -20,7 +20,26 @@ public class Foundation {
     
     private String gameName = "Lunar Lander";
     
-    public void start() {
+    
+    ///create helper thread for fuel
+    private class FuelThread extends Thread {
+    	Fuel f;
+    	public FuelThread() {
+    		f = new Fuel();
+    	}
+    	public FuelThread(Rocket R) {
+    		f = new Fuel(R);
+    	}
+    	
+    	@Override
+    	public void run() {
+    	 	
+    	 	f.fuelUsed();  
+    	}
+    }
+    
+    
+    public void start(){
         Dimension gameSize = new Dimension(WIDTH, HEIGHT);
         JFrame gameWindow = new JFrame(gameName);
         JLabel background = new JLabel();
@@ -38,7 +57,6 @@ public class Foundation {
         gameWindow.setLocationRelativeTo(null);
         
         Rocket r = new Rocket(false, 0 , 30,50, this);
-        Fuel f = new Fuel();
         Landingspace l = new Landingspace();
         Debris d = new Debris();
         gameWindow.addKeyListener(r);
@@ -57,25 +75,29 @@ public class Foundation {
         int ticks = 0;
         
         boolean running = true;
-         
-        while(running) {
-            loops = 0;
-            
-            if(r.isCrashed() == false) {
-            	//f.fuelUsed();   
-            while(System.currentTimeMillis() > nextGameTick && loops < MAX_FRAMESKIP) {
-                ticks++;
-                nextGameTick += SKIP_TICKS;
-                loops++;
-            }
-            }
-            if(r.isCrashed() == true) {
-            	System.out.println("Crashed");
-            	break;
-            } else if(r.isLanded() == true) {
-            	System.out.println("Landed");
-            	break;
-            }
+        
+		FuelThread th = new FuelThread(r);
+		th.start();         
+        
+		while(running) {
+			loops = 0;
+
+			while (System.currentTimeMillis() > nextGameTick && loops < MAX_FRAMESKIP) {
+				ticks++;
+				nextGameTick += SKIP_TICKS;
+				loops++;
+
+			}
+			if (r.isCrashed() == true) {
+				System.out.println("Crashed");
+				running = false;
+				gameWindow.setEnabled(false);
+			}
+			if (r.isLanded() == true) {
+				System.out.println("Landed");
+				running = false;
+				gameWindow.setEnabled(false);
+			}
             
             if(System.currentTimeMillis() - timeAtLastFPSCheck >= 1000) {
                 //System.out.println("FPS: " + ticks);
@@ -85,6 +107,5 @@ public class Foundation {
                 
             }
         }
-         
     }
 }

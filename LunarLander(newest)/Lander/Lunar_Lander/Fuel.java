@@ -11,34 +11,38 @@ import javax.imageio.ImageIO;
 
 public class Fuel{
 
-	private int xPos;
-	private int yPos;
 	private static double fuelAmount = 100;
-	private double fuelLoss = 0.5;
-	private Rocket r = new Rocket();
+	private double fuelLoss = 1;
+	private Rocket r ;
 	private BufferedImage landerCrashed; // Crashed Lander
 	private BufferedImage fuelBar;
 
+	public Fuel() {
+
+	}
+
+	public Fuel(Rocket R) {
+		r=R;
+	}
+
 	public void fuelUsed() {
-		while (Rocket.speedX != 0 && Rocket.speedY != 0 && fuelAmount > 0) {
-			fuelLoss = Math.abs(Rocket.speedX + Rocket.speedY) / 10;
+		//(Rocket.speedX != 0 || Rocket.speedY != 0) &&
+
+		while (fuelAmount > 0 && r.isCrashed() == false && r.isLanded() == false)  {
+
+			fuelLoss = Math.abs(r.speedX + r.speedY) / 2;
 			fuelAmount -= fuelLoss;
 			
-			if (r.isCrashed() == false) {
 				try {
 		           Thread.sleep(1000);
-		           if (r.isCrashed() == true) {
-				   break;
-		           }
 				} catch (Exception e) {
 		            e.printStackTrace();
 		        }
-			}
-			
-			System.out.println(fuelAmount);
+
+			System.out.println("Fuel :"+fuelAmount);
 		}
 		if (fuelAmount <= 0) {
-			System.out.println("Crashed");
+			System.out.println("Empty Fuel");
 			// File landerCrashedImg = new
 			// File("/LunarLander(newest)/Resources/explosion1.png");
 			// try {
@@ -49,6 +53,4 @@ public class Fuel{
 			// }
 		}
 	}
-
-	
 }

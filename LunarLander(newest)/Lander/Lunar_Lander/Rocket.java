@@ -22,8 +22,8 @@ public class Rocket implements KeyListener{
 	public boolean crashed; // Check if crashed
 	private int speedAccelerating; // Acceleration
 	public int maxLandingSpeed; // Max speed for land
-	public static double speedX; // Horizontal speed
-	public static double speedY; // Vertical speed
+	public double speedX; // Horizontal speed
+	public double speedY; // Vertical speed
 	public double speedGrav; // Gravity
 	private BufferedImage landerRocket; // Lunar Lander
 	private BufferedImage landerLanded; // Landed Lander
@@ -105,7 +105,6 @@ public class Rocket implements KeyListener{
 			return true;
 		}
 		if(xPos == 500 && yPos >= 698 && speedY >= maxLandingSpeed) {
-			System.out.println("Crashed");
 			return false;
 		}
 		return false;
@@ -232,12 +231,12 @@ public class Rocket implements KeyListener{
 		this.maxLandingSpeed = maxLandingSpeed;
 	}
 
-	public static double getSpeedX() {
+	public double getSpeedX() {
 		return speedX;
 	}
 
 	public void setSpeedX(double speedX) {
-		Rocket.speedX = speedX;
+		this.speedX = speedX;
 	}
 
 	public double getSpeedY() {
