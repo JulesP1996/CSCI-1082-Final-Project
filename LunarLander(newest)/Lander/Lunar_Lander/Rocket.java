@@ -34,6 +34,7 @@ public class Rocket implements KeyListener{
 	private BufferedImage landerFlyingLeft; // Lander flying right
 	private Foundation f = new Foundation();
 	private Landingspace l = new Landingspace();
+	private Debris d = new Debris();
 	public int landerRocketWidth; // Read image width
 	public int landerRocketHeight; // Read image height
 
@@ -47,7 +48,7 @@ public class Rocket implements KeyListener{
 		loadcontent();
 
 
-		xPos =500; //random.nextInt(Foundation.WIDTH - landerRocketWidth); // X random start
+		xPos =random.nextInt(Foundation.WIDTH - landerRocketWidth); // X random start
 		System.out.println("Rocket: " + xPos + " " + yPos);
 		yPos = 0;
 	}
@@ -115,7 +116,7 @@ public class Rocket implements KeyListener{
 	}
 
 	public boolean isCrashed() {
-		if(xPos > f.WIDTH || xPos < 0 || yPos > f.HEIGHT || yPos < 0) {
+		if(xPos > f.WIDTH || xPos < 0 || yPos > f.HEIGHT || yPos < 0 || xPos == d.getNearestDebrisID()) {
 			return true;
 		}
 		

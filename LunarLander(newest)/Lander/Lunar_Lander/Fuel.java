@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.imageio.ImageIO;
 
 public class Fuel{
@@ -14,6 +12,7 @@ public class Fuel{
 	private static double fuelAmount = 100;
 	private double fuelLoss = 1;
 	private Rocket r ;
+	private Foundation f;
 	private BufferedImage landerCrashed; // Crashed Lander
 	private BufferedImage fuelBar;
 
@@ -26,10 +25,8 @@ public class Fuel{
 	}
 
 	public void fuelUsed() {
-		//(Rocket.speedX != 0 || Rocket.speedY != 0) &&
-
+	
 		while (fuelAmount > 0 && r.isCrashed() == false && r.isLanded() == false)  {
-
 			fuelLoss = Math.abs(r.speedX + r.speedY) / 2;
 			fuelAmount -= fuelLoss;
 			

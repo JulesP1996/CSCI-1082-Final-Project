@@ -3,7 +3,11 @@ package Lunar_Lander;
 import java.awt.Canvas;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,20 +17,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Foundation {
+public class Foundation{
     
     private Canvas game = new Canvas();
     public final static int WIDTH = 1366, HEIGHT = 768;
-    
+    public boolean running = true;
     private String gameName = "Lunar Lander";
     
     
     ///create helper thread for fuel
     private class FuelThread extends Thread {
     	Fuel f;
-    	public FuelThread() {
-    		f = new Fuel();
-    	}
+    	
     	public FuelThread(Rocket R) {
     		f = new Fuel(R);
     	}
@@ -37,7 +39,6 @@ public class Foundation {
     	 	f.fuelUsed();  
     	}
     }
-    
     
     public void start(){
         Dimension gameSize = new Dimension(WIDTH, HEIGHT);
@@ -58,12 +59,15 @@ public class Foundation {
         
         Rocket r = new Rocket(false, 0 , 30,50, this);
         Landingspace l = new Landingspace();
-        Debris d = new Debris();
+		Debris d = new Debris();
+		//Graphics g;
         gameWindow.addKeyListener(r);
         l.initialize();
+        //d.paintComponent(g);
+        d.update();
         d.resetDebris();
-        System.out.println("Debris: " + d.getCurrentDebris());
-           
+        d.printAllDebris();
+        
         final int TICKS_PER_SECOND = 60;
         final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
         final int MAX_FRAMESKIP = 5;
@@ -73,8 +77,6 @@ public class Foundation {
         
         long timeAtLastFPSCheck = 0;
         int ticks = 0;
-        
-        boolean running = true;
         
 		FuelThread th = new FuelThread(r);
 		th.start();         
